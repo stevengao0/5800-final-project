@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# Virtual env
+.env/
+.venv/
+venv/
+env/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+
+# Experiments and logs
+experiments/results/*.json
+experiments/results/*.csv
+experiments/logs/
+*.log
+
+# PyCharm / VSCode
+.idea/
+.vscode/

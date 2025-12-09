@@ -21,3 +21,21 @@ def load_sst2_split(
     texts = [str(t) for t in ds[TEXT_FIELD]]
     labels = list(ds[LABEL_FIELD])
     return texts, labels
+
+def load_tweeteval_split(
+    split: str = "validation",
+    max_samples: Optional[int] = MAX_SAMPLES,
+) -> Tuple[List[str], List[int]]:
+    """
+    Load TweetEval sentiment.
+
+    Labels:
+      0 = negative, 1 = neutral, 2 = positive
+    """
+    ds = load_dataset("tweet_eval", "sentiment", split=split)
+    if max_samples is not None:
+        ds = ds.select(range(min(max_samples, len(ds))))
+
+    texts = [str(t) for t in ds["text"]]
+    labels = list(ds["label"])
+    return texts, labels

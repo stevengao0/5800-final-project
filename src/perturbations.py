@@ -1,5 +1,4 @@
 import random
-import re
 from typing import Callable
 from .config import RANDOM_SEED
 
@@ -16,10 +15,12 @@ SLANG_MAP = {
     "great": "fire",
     "good": "lit",
 }
-CODESWITCH_WORDS = ["很好玩", "一般般", "有点糟糕", "挺不错", "有点贵"]
+CODESWITCH_WORDS = ["Great", "Fine", "Bad", "Not Bad", "Too much"]
 
 
 def _random_indices(n_tokens: int, intensity: float):
+    if n_tokens == 0:
+        return set()
     k = max(1, int(n_tokens * intensity))
     return set(random.sample(range(n_tokens), min(k, n_tokens)))
 
@@ -52,7 +53,12 @@ def add_repetition_noise(text: str, intensity: float) -> str:
         if len(word) <= 3:
             return word + random.choice(["!", "!!", "!!!"])
         i = random.randint(1, len(word) - 2)
-        return word[:i] + word[i] * random.randint(2, 4) + word[i + 1:] + random.choice(["", "!", "!!"])
+        return (
+            word[:i]
+            + word[i] * random.randint(2, 4)
+            + word[i + 1 :]
+            + random.choice(["", "!", "!!"])
+        )
 
     tokens = text.split()
     idxs = _random_indices(len(tokens), intensity)
@@ -67,16 +73,19 @@ def add_repetition_noise(text: str, intensity: float) -> str:
 
 def add_slang_noise(text: str, intensity: float) -> str:
     tokens = text.split()
+    if not tokens:
+        return text
     idxs = _random_indices(len(tokens), intensity)
     new_tokens = []
     for i, tok in enumerate(tokens):
         low = tok.lower()
         replaced = False
-        for k, v in SLANG_MAP.items():
-            if low == k:
-                new_tokens.append(v)
-                replaced = True
-                break
+        if i in idxs:  # 只有选中的 token 才尝试替换
+            for k, v in SLANG_MAP.items():
+                if low == k:
+                    new_tokens.append(v)
+                    replaced = True
+                    break
         if not replaced:
             new_tokens.append(tok)
     return " ".join(new_tokens)

@@ -26,21 +26,22 @@ This project highlights a robustness gap between clean benchmark performance and
 ---
 
 ## 2. Repository Structure
+```
 5800-final-project/
 │
 ├── experiments/
 │   ├── figs/
 │   │   ├── accuracy_by_noise_type.png
 │   │   └── accuracy_vs_intensity_spelling.png
-│   └── results/   # JSON/CSV experiment outputs
+│   └── results/               # JSON/CSV experiment outputs
 │
 ├── report/
 │   ├── Proposal.md
-│   └── Report.md   # IMRaD-style final report
+│   └── Report.md              # IMRaD-style final report
 │
 ├── scripts/
 │   ├── download_data.sh
-│   └── run_all.sh   # Runs all perturbation experiments
+│   └── run_all.sh             # Runs all perturbation experiments
 │
 ├── src/
 │   ├── __init__.py
@@ -56,6 +57,7 @@ This project highlights a robustness gap between clean benchmark performance and
 │
 ├── requirements.txt
 └── README.md
+```
 
 ## 3. Installation
 
